@@ -1,5 +1,5 @@
 from rest_framework import status
-from .models import Pokemon, Stats, Multipliers
+from .models import Pokemon, Stat, Multiplier
 from .serializers import FileUploadSerializer, MultiplierSerializer, PokemonSerializer, StatSerializer
 from rest_framework import generics
 import io
@@ -47,7 +47,7 @@ class UploadFileView(generics.CreateAPIView):
 class PokemonAPIView(APIView):
 
     def get(self, request):
-        queryset = Stats.objects.all()
+        queryset = Stat.objects.all()
         pokes = PokemonSerializer(queryset, many=True)
         print(pokes)
         return Response(

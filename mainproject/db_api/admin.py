@@ -1,8 +1,8 @@
 from django.contrib import admin
-from .models import Pokemon, Stats, Multipliers
+from .models import Pokemon, Stat, Multiplier
 
 # Register your models here.
 
 admin.site.register(Pokemon)
-admin.site.register(Stats)
-admin.site.register(Multipliers)
+admin.site.register(Stat)
+admin.site.register(Multiplier)
