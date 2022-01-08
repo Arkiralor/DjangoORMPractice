@@ -8,7 +8,6 @@ from rest_framework.views import APIView
 from django.utils import timezone
 from ast import literal_eval
 from .utils import clean_df, get_additional
-import json
 
 # Create your views here.
 
@@ -98,18 +97,17 @@ class PokemonFullView(APIView):
                 full_details,
                 status=status.HTTP_400_BAD_REQUEST
             )
-        
-        # result_data = json.dumps({**pokemon.data, **full_details})
+
         result_data = {**pokemon.data, **full_details}
 
         return Response(
-                result_data,
-                status=status.HTTP_302_FOUND
-            )
+            result_data,
+            status=status.HTTP_302_FOUND
+        )
 
 
 class PokemonIndView(APIView):
-    def get(self, request, id:int):
+    def get(self, request, id: int):
         try:
             queryset = Pokemon.objects.get(pokedex_id=id)
         except Pokemon.DoesNotExist:
@@ -119,12 +117,10 @@ class PokemonIndView(APIView):
                 },
                 status=status.HTTP_204_NO_CONTENT
             )
-        
+
         pokemon_serialized = PokemonSerializer(queryset)
 
         return Response(
             pokemon_serialized.data,
             status=status.HTTP_302_FOUND
         )
-
-        
