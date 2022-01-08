@@ -65,7 +65,7 @@ class PokemonAPIView(APIView):
         )
 
 
-class PokemonIndView(APIView):
+class PokemonFullView(APIView):
     '''
     Class to view/edit/delete individual pokemon data.
     '''
@@ -105,4 +105,25 @@ class PokemonIndView(APIView):
                 result_data,
                 status=status.HTTP_302_FOUND
             )
+
+
+class PokemonIndView(APIView):
+    def get(self, request, id:int):
+        try:
+            queryset = Pokemon.objects.get(pokedex_id=id)
+        except Pokemon.DoesNotExist:
+            return Response(
+                {
+                    "error": f"Pokemon with Pokedex #{id} not in records."
+                },
+                status=status.HTTP_204_NO_CONTENT
+            )
+        
+        pokemon_serialized = PokemonSerializer(queryset)
+
+        return Response(
+            pokemon_serialized.data,
+            status=status.HTTP_302_FOUND
+        )
+
         
