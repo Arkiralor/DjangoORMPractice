@@ -32,9 +32,7 @@ class UploadFileView(generics.CreateAPIView):
                 pokeserialized.save()
 
             statserialized = StatSerializer(data=row)
-            statserialized.is_valid(raise_exception=True)
             multserialized = MultiplierSerializer(data=row)
-            multserialized.is_valid(raise_exception=True)
 
             if statserialized.is_valid() and multserialized.is_valid():
                 statserialized.save()
@@ -47,10 +45,30 @@ class UploadFileView(generics.CreateAPIView):
 class PokemonAPIView(APIView):
 
     def get(self, request):
-        queryset = Stat.objects.all()
+        queryset = Pokemon.objects.all()
         pokes = PokemonSerializer(queryset, many=True)
         print(pokes)
         return Response(
             pokes.data,
             status=status.HTTP_302_FOUND
         )
+
+class PokemonIndView(APIView):
+
+    def get(self, request, id:int):
+        try:
+            queryset = Pokemon.objects.get(pokedex_id = id)
+            pokemon = PokemonSerializer(queryset)
+            
+        except Pokemon.DoesNotExist:
+            return Response(
+                {
+                    "Status": f"Pokemon with Pokedex #{id} does not exist."
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )
+        return Response(
+            pokemon.data,
+            status=status.HTTP_302_FOUND
+        )
+
