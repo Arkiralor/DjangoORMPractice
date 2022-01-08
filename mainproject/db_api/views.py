@@ -2,8 +2,6 @@ from rest_framework import status
 from .models import Pokemon, Stat, Multiplier
 from .serializers import FileUploadSerializer, MultiplierSerializer, PokemonSerializer, StatSerializer
 from rest_framework import generics
-import io
-import csv
 import pandas as pd
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -14,12 +12,17 @@ from ast import literal_eval
 
 
 class UploadFileView(generics.CreateAPIView):
+    '''
+    View used to upload Pokemon from a .CSV file.
+    '''
     serializer_class = FileUploadSerializer
 
     def post(self, request):
+        '''
+        Uses the POST HTTP request method.
+        '''
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-
 
         file = serializer.validated_data['file']
         dataframe = pd.read_csv(file)
@@ -40,26 +43,33 @@ class UploadFileView(generics.CreateAPIView):
         return Response(
             {"Status": "File Successfully Ingested"},
             status.HTTP_201_CREATED
-            )
+        )
+
 
 class PokemonAPIView(APIView):
+    '''
+    View to retun details of all pokemon, retrieved via pokedex id.
+    '''
 
     def get(self, request):
+        '''
+        Uses HTTP GET request to retrieve all pokemon.
+        '''
         queryset = Pokemon.objects.all()
         pokes = PokemonSerializer(queryset, many=True)
-        print(pokes)
         return Response(
             pokes.data,
             status=status.HTTP_302_FOUND
         )
 
+
 class PokemonIndView(APIView):
 
-    def get(self, request, id:int):
+    def get(self, request, id: int):
         try:
-            queryset = Pokemon.objects.get(pokedex_id = id)
+            queryset = Pokemon.objects.get(pokedex_id=id)
             pokemon = PokemonSerializer(queryset)
-            
+
         except Pokemon.DoesNotExist:
             return Response(
                 {
@@ -71,4 +81,3 @@ class PokemonIndView(APIView):
             pokemon.data,
             status=status.HTTP_302_FOUND
         )
-

@@ -32,7 +32,6 @@ class Stat(models.Model):
     '''
     Model/Table to contain basic stats for each pokemon:
     '''
-    # stat_id = models.CharField(primary_key=True, default=timezone.now, max_length=32)
     pokedex_id = models.ForeignKey(Pokemon, on_delete=CASCADE)
     attack = models.IntegerField()
     special_atk = models.IntegerField()
@@ -55,7 +54,6 @@ class Multiplier(models.Model):
     '''
     Model/Table to contain the multipliers against various types for each pokemon:
     '''
-    # mult_id = models.CharField(primary_key=True, default=timezone.now, max_length=32)
     pokedex_id = models.ForeignKey(Pokemon, on_delete=CASCADE)
     against_bug = models.FloatField()
     against_dark = models.FloatField()

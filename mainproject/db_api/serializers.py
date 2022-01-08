@@ -11,7 +11,6 @@ class FileUploadSerializer(serializers.Serializer):
         fields = ('file',)
 
 
-
 class PokemonSerializer(serializers.ModelSerializer):
     class Meta:
         model = Pokemon
