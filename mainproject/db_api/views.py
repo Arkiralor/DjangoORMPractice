@@ -7,6 +7,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.utils import timezone
 from ast import literal_eval
+from .utils import get_additional
+import json
 
 # Create your views here.
 
@@ -64,8 +66,14 @@ class PokemonAPIView(APIView):
 
 
 class PokemonIndView(APIView):
+    '''
+    Class to view/edit/delete individual pokemon data.
+    '''
 
     def get(self, request, id: int):
+        '''
+        Method to get individual pokemon data.
+        '''
         try:
             queryset = Pokemon.objects.get(pokedex_id=id)
             pokemon = PokemonSerializer(queryset)
@@ -73,11 +81,28 @@ class PokemonIndView(APIView):
         except Pokemon.DoesNotExist:
             return Response(
                 {
-                    "Status": f"Pokemon with Pokedex #{id} does not exist."
+                    "status": f"Pokemon with Pokedex #{id} does not exist."
                 },
                 status=status.HTTP_404_NOT_FOUND
             )
+
+        full_details = get_additional(id=id)
+        if full_details:
+            print(full_details)
+        else:
+            full_details = {
+                "error": "error getting additional stats."
+            }
+            return Response(
+                full_details,
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        # result_data = json.dumps({**pokemon.data, **full_details})
+        result_data = {**pokemon.data, **full_details}
+
         return Response(
-            pokemon.data,
-            status=status.HTTP_302_FOUND
-        )
+                result_data,
+                status=status.HTTP_302_FOUND
+            )
+        
