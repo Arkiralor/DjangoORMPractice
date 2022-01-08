@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.utils import timezone
 from ast import literal_eval
-from .utils import get_additional
+from .utils import clean_df, get_additional
 import json
 
 # Create your views here.
@@ -27,7 +27,8 @@ class UploadFileView(generics.CreateAPIView):
         serializer.is_valid(raise_exception=True)
 
         file = serializer.validated_data['file']
-        dataframe = pd.read_csv(file)
+        dataframe_pre = pd.read_csv(file)
+        dataframe = clean_df(dataframe_pre)
 
         rows = dataframe.to_dict(orient='records')
         for row in rows:
