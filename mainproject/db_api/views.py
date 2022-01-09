@@ -67,7 +67,7 @@ class PokemonAPIView(APIView):
 
 class PokemonFullView(APIView):
     '''
-    Class to view/edit/delete individual pokemon data.
+    Class to view/edit/delete full individual pokemon data.
     '''
 
     def get(self, request, id: int):
@@ -107,7 +107,13 @@ class PokemonFullView(APIView):
 
 
 class PokemonIndView(APIView):
+    '''
+    Class to get short summary of individual pokemon.
+    '''
     def get(self, request, id: int):
+        '''
+        GET short summary of individual pokemon.
+        '''
         try:
             queryset = Pokemon.objects.get(pokedex_id=id)
         except Pokemon.DoesNotExist:
