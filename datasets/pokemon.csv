@@ -739,7 +739,7 @@ abilities,against_bug,against_dark,against_dragon,against_electric,against_fairy
 ['Levitate'],1,1,1,0.5,1,0.5,2,1,1,0.5,1,1,1,1,1,2,0.5,1,70,3840,70,500,45,Stag Beetle Pokemon,90,1000000,1.5,77,Kuwagannon?????,Vikavolt,50,738,145,75,43,bug,electric,45,7,0
 "['Hyper Cutter', 'Iron Fist', 'Anger Point']",0.5,0.5,1,1,2,1,1,2,1,1,1,1,1,1,2,0.5,1,1,82,5120,70,338,225,Boxing Pokemon,57,1000000,0.6,47,Makenkani?????,Crabrawler,50,739,42,47,63,fighting,,7,7,0
 "['Hyper Cutter', 'Iron Fist', 'Anger Point']",0.5,0.5,1,1,2,2,2,2,1,1,1,0.5,1,1,2,1,2,1,132,5120,70,478,60,Woolly Crab Pokemon,77,1000000,1.7,97,Kekenkani?????,Crabominable,50,740,62,67,43,fighting,ice,180,7,0
-['Dancer'],0.25,1,1,2,0.5,0.5,0.5,1,1,0.25,0,1,1,1,1,4,0.5,2,70,5120,70,476,45,Dancing Pokemon,70,1000000,0.6,75,Odoridori (pachipachi Style)?????,Oricorio,24.6,741,98,70,93,fire,flying,3.4,7,0
+['Dancer'],0.25,1,1,2,0.5,0.5,0.5,1,1,0.25,0,1,1,1,1,4,0.5,2,70,5120,70,476,45,Dancing Pokemon,70,1000000,0.6,75,Odoridori ?????,Oricorio,24.6,741,98,70,93,fire,flying,3.4,7,0
 "['Honey Gather', 'Shield Dust', 'Sweet Veil']",0.5,0.5,0,1,1,0.25,2,2,1,0.5,0.5,1,1,2,1,2,2,1,45,5120,70,304,190,Bee Fly Pokemon,40,1000000,0.1,40,Abuly????,Cutiefly,50,742,55,40,84,bug,fairy,0.2,7,0
 "['Honey Gather', 'Shield Dust', 'Sweet Veil']",0.5,0.5,0,1,1,0.25,2,2,1,0.5,0.5,1,1,2,1,2,2,1,55,5120,70,464,75,Bee Fly Pokemon,60,1000000,0.2,60,Aburibbon?????,Ribombee,50,743,95,70,124,bug,fairy,0.5,7,0
 "['Keen Eye', 'Vital Spirit', 'Steadfast']",1,1,1,1,1,2,0.5,0.5,1,2,2,1,0.5,0.5,1,1,2,2,65,3840,70,280,190,Puppy Pokemon,40,1000000,0.5,45,Iwanko????,Rockruff,50,744,30,40,60,rock,,9.2,7,0
