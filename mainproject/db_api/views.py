@@ -1,3 +1,4 @@
+from django.db.models import query
 from rest_framework import status
 from .models import Pokemon, Stat, Multiplier
 from .serializers import FileUploadSerializer, MultiplierSerializer, PokemonSerializer, StatSerializer
@@ -7,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.utils import timezone
 from ast import literal_eval
-from .utils import clean_df, get_additional
+from .utils import clean_df, get_additional, clean_dict
 
 # Create your views here.
 
@@ -88,22 +89,61 @@ class PokemonFullView(APIView):
 
         full_details = get_additional(id=id)
         if full_details:
-            print(full_details)
+            pass
+            # print(f" fetched: {full_details}")
         else:
-            full_details = {
-                "error": "error getting additional stats."
-            }
+            # full_details = {
+            #     "error": "error getting additional stats."
+            # }
             return Response(
-                full_details,
+                {
+                "error": "error getting additional stats."
+                },
                 status=status.HTTP_400_BAD_REQUEST
             )
 
         result_data = {**pokemon.data, **full_details}
+        result_data = clean_dict(result_data)
+        
 
         return Response(
             result_data,
             status=status.HTTP_302_FOUND
         )
+
+        # ## --------------------------------------------------------------------------------
+        '''
+        Alternate method:
+        '''
+        # query_1 = Stat.objects.select_related('pokedex_id').get(pokedex_id=id)
+        # # print(query_1.query)
+        # query_2 = Multiplier.objects.select_related('pokedex_id').get(pokedex_id=id)
+        # # print(query_2.query)
+        # stats = StatSerializer(query_1)
+        # mults = MultiplierSerializer(query_2)
+
+        # joined_data = { **stats.data, **mults.data}
+        # del joined_data["id"]
+
+        # return Response(
+        #     joined_data,
+        #     status=status.HTTP_302_FOUND
+        # )
+
+        ## --------------------------------------------------------------------------------
+        '''
+        Another Alternate method:
+        '''
+        # queryset = Stat.objects.select_related('pokedex_id').get(pokedex_id = id)
+        # stats = StatSerializer(queryset)
+        # # pokemon = queryset.Pokemon
+        # # del stats.data["id"]
+
+        # return Response(
+        # #    {**pokemon.data, **stats.data},
+        #     stats.data,
+        #     status=status.HTTP_302_FOUND
+        # )
 
 
 class PokemonIndView(APIView):
@@ -130,3 +170,6 @@ class PokemonIndView(APIView):
             pokemon_serialized.data,
             status=status.HTTP_302_FOUND
         )
+
+        
+

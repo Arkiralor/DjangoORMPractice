@@ -26,3 +26,14 @@ def clean_df(data: pd.DataFrame) -> pd.DataFrame:
         data[f"{col}"].fillna(0, inplace=True)
 
     return data
+
+def clean_dict(data: dict) -> dict:
+    '''
+    Function to clean fields in dictionary.
+    '''
+    if "id" in data.keys():
+            del data["id"]
+    if "type_2" in data.keys() and data["type_2"] == "0":
+        data["type_2"] = "Not Available/Not Applicable"
+
+    return data
