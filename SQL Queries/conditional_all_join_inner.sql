@@ -2,6 +2,8 @@ select db_api_pokemon.pokedex_id,
 db_api_pokemon.name, 
 db_api_stat.attack,
 db_api_stat.special_atk,
+db_api_pokemon.type_1,
+db_api_pokemon.type_2,
 db_api_stat.defense,
 db_api_multiplier.against_fight,
 db_api_pokemon.generation

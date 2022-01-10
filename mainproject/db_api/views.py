@@ -146,26 +146,69 @@ class PokemonIndView(APIView):
     '''
     Class to get short summary of individual pokemon.
     '''
-    def get(self, request, id: int):
+    def get(self, request, id: int, choice: str):
         '''
         GET short summary of individual pokemon.
         '''
-        try:
-            queryset = Pokemon.objects.get(pokedex_id=id)
-        except Pokemon.DoesNotExist:
+        if choice == 'basic':
+            try:
+                queryset = Pokemon.objects.get(pokedex_id=id)
+            except Pokemon.DoesNotExist:
+                return Response(
+                    {
+                        "error": f"Pokemon with Pokedex #{id} not in records."
+                    },
+                    status=status.HTTP_204_NO_CONTENT
+                )
+
+            pokemon_serialized = PokemonSerializer(queryset)
+
             return Response(
-                {
-                    "error": f"Pokemon with Pokedex #{id} not in records."
-                },
-                status=status.HTTP_204_NO_CONTENT
+                pokemon_serialized.data,
+                status=status.HTTP_302_FOUND
             )
+        elif choice == 'stats':
+            try:
+                queryset = Stat.objects.get(pokedex_id=id)
+            except Stat.DoesNotExist:
+                return Response(
+                    {
+                        "error": f"Pokemon with Pokedex #{id} not in records."
+                    },
+                    status=status.HTTP_204_NO_CONTENT
+                )
 
-        pokemon_serialized = PokemonSerializer(queryset)
+            stats_serialized = StatSerializer(queryset)
 
-        return Response(
-            pokemon_serialized.data,
-            status=status.HTTP_302_FOUND
-        )
+            return Response(
+                stats_serialized.data,
+                status=status.HTTP_302_FOUND
+            )
+        elif choice == 'mults':
+            try:
+                queryset = Multiplier.objects.get(pokedex_id=id)
+            except Multiplier.DoesNotExist:
+                return Response(
+                    {
+                        "error": f"Pokemon with Pokedex #{id} not in records."
+                    },
+                    status=status.HTTP_204_NO_CONTENT
+                )
+
+            mults_serialized = MultiplierSerializer(queryset)
+
+            return Response(
+                mults_serialized.data,
+                status=status.HTTP_302_FOUND
+            )
+        else:
+            return Response(
+                    {
+                        "error": f"Invalid value of choice: '{choice}' in URL. Valid Options: 'basic', 'stats', 'mults'."
+                    },
+                    status=status.HTTP_204_NO_CONTENT
+                )
+
 
         
 
