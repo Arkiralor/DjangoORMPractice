@@ -1,4 +1,10 @@
-select db_api_pokemon.pokedex_id, db_api_pokemon.name, db_api_multiplier.against_normal
+select db_api_pokemon.pokedex_id, 
+db_api_pokemon.name, 
+db_api_stat.attack,
+db_api_stat.special_atk,
+db_api_stat.defense,
+db_api_multiplier.against_fight,
+db_api_pokemon.generation
 from (
 		(
 			db_api_pokemon
@@ -8,4 +14,5 @@ from (
 		inner join db_api_multiplier 
 	    on db_api_pokemon.pokedex_id = db_api_multiplier.pokedex_id_id
 	)
-where db_api_multiplier.against_fairy != 1;
+where (db_api_pokemon.generation = 2 or db_api_pokemon.generation = 3) 
+and db_api_multiplier.against_fight > 1;
