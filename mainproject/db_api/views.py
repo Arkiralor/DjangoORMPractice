@@ -45,7 +45,7 @@ class UploadFileView(generics.CreateAPIView):
                 multserialized.save()
         return Response(
             {"Status": "File Successfully Ingested"},
-            status.HTTP_201_CREATED
+            status=status.HTTP_201_CREATED
         )
 
 
