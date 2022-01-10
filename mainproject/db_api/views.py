@@ -1,4 +1,3 @@
-from django.db.models import query
 from rest_framework import status
 from .models import Pokemon, Stat, Multiplier
 from .serializers import FileUploadSerializer, MultiplierSerializer, PokemonSerializer, StatSerializer
@@ -6,7 +5,6 @@ from rest_framework import generics
 import pandas as pd
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from django.utils import timezone
 from ast import literal_eval
 from .utils import clean_df, get_additional, clean_dict
 
