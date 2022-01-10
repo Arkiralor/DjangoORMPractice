@@ -90,11 +90,7 @@ class PokemonFullView(APIView):
         full_details = get_additional(id=id)
         if full_details:
             pass
-            # print(f" fetched: {full_details}")
         else:
-            # full_details = {
-            #     "error": "error getting additional stats."
-            # }
             return Response(
                 {
                 "error": "error getting additional stats."
