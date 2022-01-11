@@ -1,7 +1,7 @@
-delete from table studentapp_academian;
-delete from table studentapp_department;
-delete from table studentapp_faculty;
-delete from table studentapp_payroll;
-delete from table studentapp_scholarship;
-delete from table studentapp_scholarshipscheme;
-delete from table studentapp_student;
+delete from studentapp_academian;
+delete from studentapp_department;
+delete from studentapp_faculty;
+delete from studentapp_payroll;
+delete from studentapp_scholarship;
+delete from studentapp_scholarshipscheme;
+delete from studentapp_student;
