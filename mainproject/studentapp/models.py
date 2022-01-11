@@ -3,19 +3,20 @@ from django.db.models.deletion import CASCADE, SET_NULL
 
 # Create your models here.
 
+
 class Academian(models.Model):
     fname = models.CharField(max_length=16)
     mname = models.CharField(max_length=16, null=True, blank=True)
     lname = models.CharField(max_length=16)
     date_of_birth = models.DateField(default='1992-01-01')
     RANK_CHOICES = (
-        ('Prof.','Professor'),
-        ('Asst. Prof.','Assistant Professor'),
-        ('Asc. Prof.','Associate Professor'),
-        ('Lec.','Lecturer')
+        ('Prof.', 'Professor'),
+        ('Asst. Prof.', 'Assistant Professor'),
+        ('Asc. Prof.', 'Associate Professor'),
+        ('Lec.', 'Lecturer')
     )
     rank = models.CharField(max_length=64, choices=RANK_CHOICES)
-    date_of_joining = models.DateField(default='2017-01-01')
+    date_of_joining = models.DateField(default='2015-08-01')
 
     def __str__(self):
         return self.rank + ' ' + self.fname + ' ' + self.lname
@@ -37,18 +38,38 @@ class Department(models.Model):
     def __str__(self):
         return f"Department of {self.name}"
 
+
+class Degree(models.Model):
+    TYPE_CHOICES = (
+        ('Diploma', 'Dip.'),
+        ('Post Graduate Diploma', 'PGD.'),
+        ('Bachelor', 'Bachelor'),
+        ('Master', 'Master'),
+        ('Master of Philosophy', 'MPhil.'),
+        ('Doctor of Philosophy', 'PhD')
+    )
+    type = models.CharField(max_length=128, choices=TYPE_CHOICES)
+    faculty = models.ForeignKey(Faculty, on_delete=CASCADE)
+    department = models.ForeignKey(Department, on_delete=CASCADE)
+
+    def __str__(self):
+        return f"{self.type} of {self.faculty.type} in {self.department.name}"
+
+
 class Student(models.Model):
     id = models.AutoField(primary_key=True, null=False)
     fname = models.CharField(max_length=16)
     mname = models.CharField(max_length=16, null=True, blank=True)
     lname = models.CharField(max_length=16)
     date_of_birth = models.DateField(default='1992-01-01')
-    degree = models.CharField(max_length=32)
+    degree = models.ForeignKey(Degree, on_delete=SET_NULL, null=True)
     major = models.ForeignKey(Department, on_delete=CASCADE)
+    degree_awarded = models.BooleanField(default=False)
 
     def __str__(self):
         return self.fname + ' ' + self.lname
-        
+
+
 class Payroll(models.Model):
     staff = models.ForeignKey(Academian, on_delete=CASCADE)
     basic_pay = models.IntegerField()
@@ -63,6 +84,7 @@ class Payroll(models.Model):
 
     def __str__(self):
         return f"{self.staff}"
+
 
 class ScholarshipScheme(models.Model):
     name = models.CharField(max_length=128)
@@ -88,3 +110,5 @@ class Scholarship(models.Model):
 
     def __str__(self):
         return f"{self.student}, {self.scheme}"
+
+

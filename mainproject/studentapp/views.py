@@ -3,6 +3,7 @@ from .models import *
 from .serializers import *
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.viewsets import ModelViewSet
 
 # Create your views here.
 
@@ -107,3 +108,40 @@ class StudentIndView(APIView):
             serialized_student.data,
             status=status.HTTP_410_GONE
         )
+
+class AcademianView(ModelViewSet):
+    '''
+    API View for all academians.
+    '''
+    queryset = Academian.objects.all()
+    serializer_class = AcademinSerializer
+
+
+    # def get_queryset(self):
+    #     '''
+    #     Method to GET all academians in the system.
+    #     '''
+    #     return self.request.Academian.objects.all()
+
+    # queryset = get_queryset(self)
+
+    # def post(self, request):
+    #     '''
+    #     Method to POST new academian.
+    #     '''
+    #     serialized = AcademinSerializer(data=request.data)
+
+    #     if serialized.is_valid():
+    #         serialized.save()
+    #         return Response(
+    #             serialized.data,
+    #             status=status.HTTP_201_CREATED
+    #         )
+    #     else:
+    #         return Response(
+    #             {
+    #                 "error": serialized.errors
+    #             },
+    #             status=status.HTTP_400_BAD_REQUEST
+    #         )
+        
