@@ -23,6 +23,9 @@ class StudentView(APIView):
             )
     
     def post(self, request):
+        '''
+        POST/add a new student.
+        '''
         serialized = StudentSerializer(data=request.data)
         if serialized.is_valid():
             serialized.save()
@@ -32,12 +35,12 @@ class StudentView(APIView):
 
 class StudentIndView(APIView):
     '''
-    View for all students.
+    View for individual students.
     '''
 
     def get(self, request, id:int):
         '''
-        GET list of all students.
+        GET individual students via id.
         '''
         try:
             queryset = Student.objects.get(pk=id)
@@ -53,6 +56,28 @@ class StudentIndView(APIView):
                     student.data,
                     status=status.HTTP_302_FOUND
                 )
+
+    def put(self, request, id:int):
+        '''
+        PUT/PATCH an individual student.
+        '''
+        queryset = Student.objects.get(pk=id)
+        serialized = StudentSerializer(queryset, data=request.data)
+
+        if serialized.is_valid():
+            serialized.save()
+            return Response(
+                serialized.data,
+                status = status.HTTP_200_OK
+            )
+        else:
+            return Response(
+                {
+                    "error": str(serialized.errors)
+                },
+                status=status.HTTP_406_NOT_ACCEPTABLE
+            )
+
 
     
 
