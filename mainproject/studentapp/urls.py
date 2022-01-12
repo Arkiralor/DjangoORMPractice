@@ -4,7 +4,7 @@ from .views import *
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
-router.register('academic_staff', AcademianView)
+router.register('academicstaff', AcademianView)
 router.register('faculty', FacultyView)
 router.register('department', DepartmentView)
 router.register('degree', DegreeView)
