@@ -1,7 +1,8 @@
 from rest_framework import serializers
-from .models import Academian, Faculty, Department, Student, Payroll, ScholarshipScheme, Scholarship
+from .models import Academian, Faculty, Department, Degree, Student, Payroll, ScholarshipScheme, Scholarship
 
 # Create your serializers here:
+
 
 class AcademinSerializer(serializers.ModelSerializer):
     class Meta:
@@ -18,6 +19,12 @@ class FacultySerializer(serializers.ModelSerializer):
 class DepartmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Department
+        fields = '__all__'
+
+
+class DegreeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Degree
         fields = '__all__'
 
 
@@ -43,3 +50,11 @@ class ScholarshipSerializer(serializers.ModelSerializer):
     class Meta:
         model = Scholarship
         fields = '__all__'
+
+
+class DepartmentAltSerializer(serializers.ModelSerializer):
+    parent_faculty = FacultySerializer(many=True, read_only=True)
+    head_of_department = AcademinSerializer(many=True, read_only=True)
+    class Meta:
+        model = Department
+        fields = ['name', 'parent_faculty', 'head_of_department']

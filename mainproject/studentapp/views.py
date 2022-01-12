@@ -115,10 +115,79 @@ class AcademianView(ModelViewSet):
     '''
     queryset = Academian.objects.all()
     serializer_class = AcademinSerializer
+    lookup_field = 'id'
 
-class AcademianIndView(ModelViewSet):
+class FacultyView(ModelViewSet):
     '''
-    API View for individual academians.
+    API View for all faculties.
     '''
-    queryset = Academian.objects.get(id)
-    serializer_class = AcademinSerializer
+    queryset = Faculty.objects.all()
+    serializer_class = FacultySerializer
+    lookup_field = 'id'
+
+class DepartmentView(ModelViewSet):
+    '''
+    API View for all departments.
+    '''
+    queryset = Department.objects.all()
+    serializer_class = DepartmentSerializer
+    lookup_field = 'id'
+
+class DegreeView(ModelViewSet):
+    '''
+    API View for all degrees.
+    '''
+    queryset = Degree.objects.all()
+    serializer_class = DegreeSerializer
+    lookup_field = 'id'
+
+class PayrollView(ModelViewSet):
+    '''
+    API View for all degrees.
+    '''
+    queryset = Payroll.objects.all()
+    serializer_class = PayrollSerializer
+    lookup_field = 'id'
+
+
+class ScholarshipSchemeView(ModelViewSet):
+    '''
+    API View for all scholarship schemes.
+    '''
+    queryset = ScholarshipScheme.objects.all()
+    serializer_class = ScholarshipSchemeSerializer
+    lookup_field = 'id'
+
+
+class ScholarshipView(ModelViewSet):
+    '''
+    API View for all scholarships.
+    '''
+    queryset = Scholarship.objects.all()
+    serializer_class = ScholarshipSerializer
+    lookup_field = 'id'
+
+
+class DepartmentAltView(APIView):
+    '''
+    Trying nested views/serializers for model Department.
+    '''
+
+    def get(self, request, id:int):
+        try:
+            department = Department.objects.select_related('faculty').get(pk=id)
+            depart_serialized = DepartmentAltSerializer(department)
+
+        except Department.DoesNotExist:
+            return Response(
+                {
+                    "error": f"Department with id = {id} does not exist."
+                },
+                status=status.HTTP_204_NO_CONTENT
+            )
+
+        return Response(
+            depart_serialized.data,
+            status=status.HTTP_302_FOUND
+        )
+
