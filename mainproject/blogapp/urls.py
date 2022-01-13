@@ -4,7 +4,7 @@ from .views import UserView, BlogPostView
 
 router = DefaultRouter()
 router.register('users', UserView)
-router.register('blog/posts', BlogPostView)
+router.register('posts', BlogPostView)
 
 
 urlpatterns = [
