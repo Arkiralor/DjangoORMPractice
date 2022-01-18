@@ -19,12 +19,67 @@ class UserView(ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     lookup_field = 'id'
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAdminUser]
 
 
-class BlogPostView(ModelViewSet):
+# class BlogPostView(ModelViewSet):
+#     '''
+#     API Model View for all blog posts.
+#     '''
+#     queryset = Blog.objects.all()
+#     serializer_class = BlogSerializer
+#     lookup_field = 'id'
+
+class BlogView(APIView):
     '''
-    API Model View for all blog posts.
+    View to get all blog-posts and post new blog-post.
     '''
+
+    def get(self, request):
+        try:
+            queryset = Blog.objects.all()
+            blog_posts = BlogSerializer(queryset, many=True)
+        except Blog.DoesNotExist:
+            return Response(
+                {
+                    "error": "No posts in database."
+                },
+                status=status.HTTP_204_NO_CONTENT
+            )
+
+        return Response(
+            blog_posts.data,
+            status=status.HTTP_302_FOUND
+        )
+
+    def post(self, request):
+        try:
+            data = BlogSerializer(data=request.data)
+        except Exception as err:
+            return Response(
+                {
+                    "error": str(err)
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        if data.is_valid():
+            data.save()
+            return Response(
+                data.data,
+                status=status.HTTP_201_CREATED
+            )
+        else:
+            return Response(
+                {
+                    "error": str(data.errors)
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+
+class BlogPostView(APIView):
     authentication_classes = [SessionAuthentication, BasicAuthentication]
     permission_classes = [IsAuthenticated]
     queryset = Blog.objects.all()
