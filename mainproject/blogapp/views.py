@@ -19,9 +19,6 @@ class UserView(ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     lookup_field = 'id'
-    authentication_classes = [SessionAuthentication, BasicAuthentication]
-    permission_classes = [IsAdminUser]
-
 
 # class BlogPostView(ModelViewSet):
 #     '''
