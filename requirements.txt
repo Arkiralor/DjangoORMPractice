@@ -6,12 +6,12 @@ asgiref==3.4.1
 async-timeout==4.0.2
 attrs==21.4.0
 autopep8==1.6.0
-backports.zoneinfo==0.2.1
 caio==0.9.3
 certifi==2021.10.8
 cffi==1.15.0
 charset-normalizer==2.0.10
 Django==4.0.1
+django-cors-headers==3.11.0
 djangorestframework==3.13.1
 frozenlist==1.2.0
 idna==3.3
@@ -30,5 +30,6 @@ requests==2.27.1
 six==1.16.0
 sqlparse==0.4.2
 toml==0.10.2
+tzdata==2021.5
 urllib3==1.26.8
 yarl==1.7.2
