@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, Author
+from .models import User
 
 # Define your serializers here:
 
