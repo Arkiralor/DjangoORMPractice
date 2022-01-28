@@ -105,40 +105,6 @@ class PokemonFullView(APIView):
             status=status.HTTP_302_FOUND
         )
 
-        # ## --------------------------------------------------------------------------------
-        '''
-        Alternate method:
-        '''
-        # query_1 = Stat.objects.select_related('pokedex_id').get(pokedex_id=id)
-        # # print(query_1.query)
-        # query_2 = Multiplier.objects.select_related('pokedex_id').get(pokedex_id=id)
-        # # print(query_2.query)
-        # stats = StatSerializer(query_1)
-        # mults = MultiplierSerializer(query_2)
-
-        # joined_data = { **stats.data, **mults.data}
-        # del joined_data["id"]
-
-        # return Response(
-        #     joined_data,
-        #     status=status.HTTP_302_FOUND
-        # )
-
-        ## --------------------------------------------------------------------------------
-        '''
-        Another Alternate method:
-        '''
-        # queryset = Stat.objects.select_related('pokedex_id').get(pokedex_id = id)
-        # stats = StatSerializer(queryset)
-        # # pokemon = queryset.Pokemon
-        # # del stats.data["id"]
-
-        # return Response(
-        # #    {**pokemon.data, **stats.data},
-        #     stats.data,
-        #     status=status.HTTP_302_FOUND
-        # )
-
 
 class PokemonIndView(APIView):
     '''
