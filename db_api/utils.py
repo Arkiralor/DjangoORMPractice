@@ -34,6 +34,6 @@ def clean_dict(data: dict) -> dict:
     if "id" in data.keys():
             del data["id"]
     if "type_2" in data.keys() and data["type_2"] == "0":
-        data["type_2"] = "Not Available/Not Applicable"
+        data["type_2"] = "Not Available//Not Applicable"
 
     return data
