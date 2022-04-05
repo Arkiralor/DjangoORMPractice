@@ -26,6 +26,7 @@ class Pokemon(models.Model):
 
     class Meta:
         verbose_name_plural = 'pokemon'
+        unique_together = ['pokedex_id', 'name', 'japanese_name']
 
 
 class Stat(models.Model):
@@ -44,10 +45,11 @@ class Stat(models.Model):
     capture_rate = models.FloatField(default=-1.5)
 
     def __str__(self):
-        return self.pokedex_id
+        return str(self.pokedex_id.pokedex_id)
 
     class Meta:
         verbose_name_plural = 'stats'
+        unique_together = ['pokedex_id']
 
 
 class Multiplier(models.Model):
@@ -75,7 +77,8 @@ class Multiplier(models.Model):
     against_water = models.FloatField(default=-1.5)
 
     def __str__(self):
-        return self.pokedex_id
+        return str(self.pokedex_id.pokedex_id)
 
     class Meta:
         verbose_name_plural = 'multipliers'
+        unique_together = ['pokedex_id']

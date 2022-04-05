@@ -35,18 +35,23 @@ ALLOWED_HOSTS = ['localhost']
 
 # Application definition
 
-INSTALLED_APPS = [
+BUILT_IN_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+]
+
+NEW_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'db_api',
     'user_api',
 ]
+
+INSTALLED_APPS = BUILT_IN_APPS + NEW_APPS
 
 
 MIDDLEWARE = [
@@ -80,16 +85,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'mainproject.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
 
 # Production database in PostgreSQL
 DATABASES = {
