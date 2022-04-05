@@ -3,10 +3,6 @@ from .models import Pokemon, Stat, Multiplier
 
 # Register your models here.
 
-# admin.site.register(Pokemon)
-# admin.site.register(Stat)
-# admin.site.register(Multiplier)
-
 @admin.register(Pokemon)
 class PokemonAdmin(admin.ModelAdmin):
     list_display = (
@@ -31,6 +27,7 @@ class StatAdmin(admin.ModelAdmin):
         'defense', 'special_def', 'hit_points', 
         'weight', 'height', 'speed', 'capture_rate'
         )
+
     raw_id_fields = ('pokedex_id',)
     
     search_fields = (
@@ -51,6 +48,7 @@ class MultiplierAdmin(admin.ModelAdmin):
         'against_normal', 'against_poison', 'against_psychic', 
         'against_rock', 'against_steel', 'against_water'
         )
+        
     raw_id_fields = ('pokedex_id',)
 
     search_fields = (
